@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CV Builder Pro</title>
+<link rel="manifest" href="manifest.json">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Tahoma,Arial,sans-serif;background:linear-gradient(135deg,#eef2ff,#f8fafc);color:#172033}
+header{background:linear-gradient(135deg,#111827,#2563eb);color:#fff;padding:20px;text-align:center;font-size:27px;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:18px}
+.card{background:#fff;border-radius:22px;padding:22px;margin-bottom:18px;box-shadow:0 8px 28px #0001}
+h2{margin-top:0;color:#172554}
+button{border:0;border-radius:14px;padding:13px 17px;margin:5px;background:#2563eb;color:#fff;font-size:15px;font-weight:bold}
+.green{background:#16a34a}.red{background:#dc2626}.dark{background:#111827}.gray{background:#64748b}.purple{background:#7c3aed}
+input,textarea,select{width:100%;padding:14px;margin:6px 0;border:1px solid #dbe2ea;border-radius:13px;background:#f8fafc;font-size:16px}
+textarea{min-height:100px;resize:vertical}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.item{background:#f8fafc;border:1px solid #e2e8f0;padding:15px;border-radius:15px;margin:10px 0}
+.actions{display:flex;flex-wrap:wrap;gap:5px}
+.hidden{display:none!important}
+
+/* HOME */
+#home{min-height:calc(100vh - 70px);display:flex;align-items:center;justify-content:center}
+.home-box{width:100%;max-width:850px;text-align:center;padding:30px}
+.logo{font-size:65px}
+.home-title{font-size:38px;font-weight:bold;color:#172554}
+.home-subtitle{font-size:17px;color:#64748b;margin:12px 0 28px}
+.home-buttons{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.home-btn{padding:25px 15px;border-radius:20px;color:#fff;font-size:18px;font-weight:bold;box-shadow:0 8px 20px #0002}
+.home-btn small{display:block;font-size:13px;margin-top:8px;opacity:.85}
+.home-new{background:linear-gradient(135deg,#2563eb,#1d4ed8)}
+.home-load{background:linear-gradient(135deg,#16a34a,#15803d)}
+.home-template{background:linear-gradient(135deg,#7c3aed,#6d28d9)}
+.home-settings{background:linear-gradient(135deg,#475569,#334155)}
+
+.cv-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+.cv-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:18px}
+.cv-card h3{margin-top:0;color:#172554}
+
+/* CV */
+.preview{background:#e2e8f0;padding:20px 8px;border-radius:20px}
+.cv{background:#fff;max-width:850px;min-height:1000px;margin:auto;border-radius:12px;overflow:hidden;box-shadow:0 15px 40px #0002}
+.cv-head{padding:35px;display:flex;align-items:center;gap:22px;color:#fff;background:linear-gradient(135deg,#172554,#2563eb)}
+.cv-photo{width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid #fff;background:#ddd}
+.cv-name{font-size:31px;font-weight:bold}
+.cv-job{font-size:18px;margin-top:8px;opacity:.9}
+.cv-contact{margin-top:10px;line-height:2;font-size:14px}
+.cv-body{padding:30px 35px}
+.cv-section{margin-bottom:28px}
+.cv-section h3{color:#1d4ed8;border-bottom:2px solid #dbeafe;padding-bottom:10px;margin-bottom:15px}
+.cv-entry{margin-bottom:16px}
+.cv-entry-title{font-size:17px;font-weight:bold}
+.cv-muted{color:#64748b;font-size:14px;margin:4px 0}
+.skill{display:inline-block;background:#dbeafe;color:#1e40af;padding:8px 13px;border-radius:20px;margin:4px;font-size:14px}
+.lang{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:9px 0}
+.empty{color:#94a3b8}
+
+/* TEMPLATES */
+.template2 .cv-head{background:#fff!important;color:#111827;border-bottom:5px solid #2563eb}
+.template2 .cv-photo{border-color:#2563eb}
+.template2 .cv-section h3{color:#111827}
+.template3 .cv-head{background:#111827!important}
+.template3 .cv-section h3{color:#111827;border-color:#111827}
+.template3 .skill{background:#111827;color:#fff}
+.template4 .cv-head{background:#fff!important;color:#064e3b;border-right:8px solid #16a34a}
+.template4 .cv-photo{border-color:#16a34a}
+.template4 .cv-section h3{color:#16a34a}
+
+@media(max-width:700px){
+.row,.home-buttons{grid-template-columns:1fr}
+.home-title{font-size:30px}
+.cv-head{flex-direction:column;text-align:center}
+.cv-body{padding:22px}
+.cv-name{font-size:25px}
+.actions button{flex:1}
+}
+
+@media print{
+body{background:#fff}
+header,.editor,.no-print{display:none!important}
+.preview{padding:0;background:#fff}
+.cv{box-shadow:none;max-width:none;border-radius:0;min-height:auto}
+}
+</style>
+</head>
+
+<body>
+
+<header>📄 CV Builder Pro</header>
+
+<!-- HOME -->
+<section id="home">
+<div class="home-box">
+<div class="logo">📄</div>
+<div class="home-title">CV Builder Pro</div>
+<div class="home-subtitle">رزومه حرفه‌ای خودت را در چند دقیقه بساز</div>
+
+<div class="home-buttons">
+<button class="home-btn home-new" onclick="newCV()">➕ ساخت CV جدید<small>شروع یک رزومه جدید</small></button>
+<button class="home-btn home-load" onclick="showSaved()">📂 CVهای من<small>مشاهده رزومه‌های ذخیره‌شده</small></button>
+<button class="home-btn home-template" onclick="showTemplates()">🎨 قالب‌های CV<small>انتخاب طراحی رزومه</small></button>
+<button class="home-btn home-settings" onclick="showSettings()">⚙️ تنظیمات<small>تنظیمات برنامه</small></button>
+</div>
+
+<div id="savedStatus" class="card">در حال بررسی...</div>
+</div>
+</section>
+
+<!-- SAVED -->
+<section id="savedPage" class="container hidden">
+<div class="card">
+<h2>📂 CVهای من</h2>
+<div id="savedList"></div>
+<button class="gray" onclick="backHome()">⬅️ برگشت</button>
+</div>
+</section>
+
+<!-- TEMPLATES -->
+<section id="templatePage" class="container hidden">
+<div class="card">
+<h2>🎨 قالب‌های CV</h2>
+<button onclick="chooseTemplate('template1')">📘 کلاسیک</button>
+<button onclick="chooseTemplate('template2')">✨ مینیمال</button>
+<button onclick="chooseTemplate('template3')">🖤 مدرن</button>
+<button onclick="chooseTemplate('template4')">🌿 سبز</button>
+<br>
+<button class="gray" onclick="backHome()">⬅️ برگشت</button>
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settingsPage" class="container hidden">
+<div class="card">
+<h2>⚙️ تنظیمات</h2>
+<p>📄 CV Builder Pro</p>
+<p>💾 ذخیره‌سازی چند رزومه فعال است.</p>
+<button class="red" onclick="deleteAllCVs()">🗑 حذف تمام CVها</button>
+<br>
+<button class="gray" onclick="backHome()">⬅️ برگشت</button>
+</div>
+</section>
+
+<!-- EDITOR -->
+<section id="editorPage" class="hidden">
+<div class="container editor">
+
+<div class="card">
+<button class="gray" onclick="backHome()">⬅️ صفحه اصلی</button>
+
+<h2>📝 نام این CV</h2>
+<input id="cvTitle" placeholder="مثلاً CV شخصی من">
+
+<h2>🎨 طراحی CV</h2>
+
+<select id="template">
+<option value="template1">قالب ۱ - کلاسیک</option>
+<option value="template2">قالب ۲ - مینیمال</option>
+<option value="template3">قالب ۳ - مدرن</option>
+<option value="template4">قالب ۴ - سبز</option>
+</select>
+
+<select id="theme">
+<option value="blue">🔵 آبی</option>
+<option value="dark">⚫ تیره</option>
+<option value="green">🟢 سبز</option>
+</select>
+
+<label>📷 عکس پروفایل</label>
+<input type="file" id="photo" accept="image/*">
+</div>
+
+<div class="card">
+<h2>👤 اطلاعات شخصی</h2>
+<div class="row">
+<input id="name" placeholder="نام کامل">
+<input id="job" placeholder="عنوان شغلی">
+</div>
+<div class="row">
+<input id="email" placeholder="ایمیل">
+<input id="phone" placeholder="شماره تلفن">
+</div>
+<input id="address" placeholder="آدرس">
+<textarea id="about" placeholder="درباره من"></textarea>
+</div>
+
+<div class="card">
+<h2>🎓 تحصیلات</h2>
+<div id="educationList"></div>
+<button onclick="addEducation()">+ افزودن تحصیلات</button>
+</div>
+
+<div class="card">
+<h2>💼 تجربه کاری</h2>
+<div id="experienceList"></div>
+<button onclick="addExperience()">+ افزودن تجربه کاری</button>
+</div>
+
+<div class="card">
+<h2>🛠 مهارت‌ها</h2>
+<div id="skillsList"></div>
+<button onclick="addSkill()">+ افزودن مهارت</button>
+</div>
+
+<div class="card">
+<h2>🌐 زبان‌ها</h2>
+<div id="languagesList"></div>
+<button onclick="addLanguage()">+ افزودن زبان</button>
+</div>
+
+<div class="card">
+<h2>⚙️ مدیریت</h2>
+<div class="actions">
+<button class="green" onclick="saveCurrentCV()">💾 ذخیره CV</button>
+<button class="gray" onclick="showSaved()">📂 CVهای من</button>
+<button class="dark" onclick="downloadPDF()">📥 PDF</button>
+<button onclick="printCV()">🖨 چاپ</button>
+<button class="purple" onclick="shareCV()">📤 اشتراک‌گذاری</button>
+<button class="red" onclick="clearCV()">🗑 پاک کردن</button>
+</div>
+</div>
+
+</div>
+
+<!-- PREVIEW -->
+<div class="container">
+<div class="card">
+<h2>👁 پیش‌نمایش CV</h2>
+
+<div class="preview">
+<div id="cv" class="cv template1">
+
+<div class="cv-head" id="cvHead">
+<img id="cvPhoto" class="cv-photo">
+
+<div>
+<div id="cvName" class="cv-name">نام شما</div>
+<div id="cvJob" class="cv-job">عنوان شغلی</div>
+
+<div class="cv-contact">
+<div id="cvEmail">📧 ایمیل</div>
+<div id="cvPhone">📱 شماره تلفن</div>
+<div id="cvAddress">📍 آدرس</div>
+</div>
+</div>
+</div>
+
+<div class="cv-body">
+
+<div class="cv-section">
+<h3>👤 درباره من</h3>
+<div id="cvAbout" class="empty">توضیحات درباره شما</div>
+</div>
+
+<div class="cv-section">
+<h3>🎓 تحصیلات</h3>
+<div id="cvEducation"></div>
+</div>
+
+<div class="cv-section">
+<h3>💼 تجربه کاری</h3>
+<div id="cvExperience"></div>
+</div>
+
+<div class="cv-section">
+<h3>🛠 مهارت‌ها</h3>
+<div id="cvSkills"></div>
+</div>
+
+<div class="cv-section">
+<h3>🌐 زبان‌ها</h3>
+<div id="cvLanguages"></div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<script>
+let data={
+title:"",
+education:[],
+experience:[],
+skills:[],
+languages:[],
+photo:""
+};
+
+let currentID=null;
+
+const fields=["name","job","email","phone","address","about"];
+
+function show(id){
+["home","savedPage","templatePage","settingsPage","editorPage"]
+.forEach(x=>document.getElementById(x).classList.add("hidden"));
+document.getElementById(id).classList.remove("hidden");
+}
+
+function newCV(){
+currentID=null;
+data={title:"",education:[],experience:[],skills:[],languages:[],photo:""};
+
+fields.forEach(id=>document.getElementById(id).value="");
+document.getElementById("cvTitle").value="";
+document.getElementById("photo").value="";
+document.getElementById("template").value="template1";
+document.getElementById("theme").value="blue";
+
+renderEditor();
+updateCV();
+show("editorPage");
+}
+
+function getAllCVs(){
+return JSON.parse(localStorage.getItem("cv_builder_multi")||"[]");
+}
+
+function saveAllCVs(list){
+localStorage.setItem("cv_builder_multi",JSON.stringify(list));
+}
+
+function saveCurrentCV(){
+let title=document.getElementById("cvTitle").value.trim();
+if(!title)title=document.getElementById("name").value.trim();
+
+if(!title){
+alert("لطفاً برای CV یک نام وارد کن.");
+return;
+}
+
+let personal={};
+fields.forEach(id=>personal[id]=document.getElementById(id).value);
+
+data.title=title;
+data.personal=personal;
+data.template=document.getElementById("template").value;
+data.theme=document.getElementById("theme").value;
+
+let list=getAllCVs();
+let id=currentID||Date.now();
+data.id=id;
+
+let index=list.findIndex(x=>x.id===id);
+if(index>=0)list[index]=data;
+else list.push(data);
+
+saveAllCVs(list);
+currentID=id;
+updateSavedStatus();
+
+alert("CV ذخیره شد ✅");
+}
+
+function showSaved(){
+let list=getAllCVs();
+let box=document.getElementById("savedList");
+
+if(!list.length){
+box.innerHTML='<div class="card">📭 هنوز هیچ CV ذخیره نشده است.</div>';
+show("savedPage");
+return;
+}
+
+box.innerHTML="";
+
+list.forEach(x=>{
+box.innerHTML+=`
+<div class="cv-card">
+<h3>📄 ${esc(x.title||"CV بدون نام")}</h3>
+<small>${esc(x.personal?.name||"بدون نام")}</small>
+<br><br>
+<button onclick="openCV(${x.id})">📂 باز کردن</button>
+<button class="red" onclick="deleteCV(${x.id})">🗑 حذف</button>
+</div>`;
+});
+
+show("savedPage");
+}
+
+function openCV(id){
+let saved=getAllCVs().find(x=>x.id===id);
+if(!saved)return;
+
+currentID=id;
+data=saved;
+
+fields.forEach(id=>{
+document.getElementById(id).value=data.personal?.[id]||"";
+});
+
+document.getElementById("cvTitle").value=data.title||"";
+document.getElementById("template").value=data.template||"template1";
+document.getElementById("theme").value=data.theme||"blue";
+
+renderEditor();
+updateCV();
+show("editorPage");
+}
+
+function deleteCV(id){
+if(!confirm("این CV حذف شود؟"))return;
+saveAllCVs(getAllCVs().filter(x=>x.id!==id));
+showSaved();
+updateSavedStatus();
+}
+
+function deleteAllCVs(){
+if(!confirm("تمام CVهای ذخیره‌شده حذف شوند؟"))return;
+localStorage.removeItem("cv_builder_multi");
+updateSavedStatus();
+alert("همه CVها حذف شدند.");
+}
+
+function updateSavedStatus(){
+let n=getAllCVs().length;
+document.getElementById("savedStatus").innerHTML=
+n?"✅ "+n+" CV ذخیره شده داری.":"📭 هنوز CV ذخیره‌شده‌ای نداری.";
+}
+
+function backHome(){
+updateSavedStatus();
+show("home");
+}
+
+function showTemplates(){show("templatePage")}
+function showSettings(){show("settingsPage")}
+
+function chooseTemplate(t){
+document.getElementById("template").value=t;
+localStorage.setItem("selected_template",t);
+alert("قالب انتخاب شد ✅");
+newCV();
+}
+
+fields.forEach(id=>document.getElementById(id).addEventListener("input",updateCV));
+document.getElementById("cvTitle").addEventListener("input",updateCV);
+document.getElementById("template").addEventListener("change",updateTemplate);
+document.getElementById("theme").addEventListener("change",updateTheme);
+
+document.getElementById("photo").addEventListener("change",function(e){
+let file=e.target.files[0];
+if(!file)return;
+
+let reader=new FileReader();
+reader.onload=function(){
+data.photo=reader.result;
+updateCV();
+};
+reader.readAsDataURL(file);
+});
+
+function addEducation(){
+data.education.push({school:"",field:"",year:"",description:""});
+renderEditor();updateCV();
+}
+
+function addExperience(){
+data.experience.push({company:"",position:"",duration:"",description:""});
+renderEditor();updateCV();
+}
+
+function addSkill(){
+data.skills.push("");
+renderEditor();updateCV();
+}
+
+function addLanguage(){
+data.languages.push({name:"",level:""});
+renderEditor();updateCV();
+}
+
+function removeEducation(i){
+data.education.splice(i,1);renderEditor();updateCV();
+}
+
+function removeExperience(i){
+data.experience.splice(i,1);renderEditor();updateCV();
+}
+
+function removeSkill(i){
+data.skills.splice(i,1);renderEditor();updateCV();
+}
+
+function removeLanguage(i){
+data.languages.splice(i,1);renderEditor();updateCV();
+}
+
+function renderEditor(){
+
+let e=document.getElementById("educationList");
+e.innerHTML="";
+
+data.education.forEach((x,i)=>{
+e.innerHTML+=`
+<div class="item">
+<input placeholder="نام دانشگاه/مکتب" value="${esc(x.school)}"
+oninput="data.education[${i}].school=this.value;updateCV()">
+<input placeholder="رشته تحصیلی" value="${esc(x.field)}"
+oninput="data.education[${i}].field=this.value;updateCV()">
+<input placeholder="سال فراغت" value="${esc(x.year)}"
+oninput="data.education[${i}].year=this.value;updateCV()">
+<textarea placeholder="توضیحات"
+oninput="data.education[${i}].description=this.value;updateCV()">${esc(x.description)}</textarea>
+<button class="red" onclick="removeEducation(${i})">حذف</button>
+</div>`;
+});
+
+let ex=document.getElementById("experienceList");
+ex.innerHTML="";
+
+data.experience.forEach((x,i)=>{
+ex.innerHTML+=`
+<div class="item">
+<input placeholder="نام شرکت" value="${esc(x.company)}"
+oninput="data.experience[${i}].company=this.value;updateCV()">
+<input placeholder="عنوان وظیفه" value="${esc(x.position)}"
+oninput="data.experience[${i}].position=this.value;updateCV()">
+<input placeholder="مدت کار" value="${esc(x.duration)}"
+oninput="data.experience[${i}].duration=this.value;updateCV()">
+<textarea placeholder="شرح وظایف"
+oninput="data.experience[${i}].description=this.value;updateCV()">${esc(x.description)}</textarea>
+<button class="red" onclick="removeExperience(${i})">حذف</button>
+</div>`;
+});
+
+let s=document.getElementById("skillsList");
+s.innerHTML="";
+
+data.skills.forEach((x,i)=>{
+s.innerHTML+=`
+<div class="item">
+<input placeholder="مثلاً Microsoft Word" value="${esc(x)}"
+oninput="data.skills[${i}]=this.value;updateCV()">
+<button class="red" onclick="removeSkill(${i})">حذف</button>
+</div>`;
+});
+
+let l=document.getElementById("languagesList");
+l.innerHTML="";
+
+data.languages.forEach((x,i)=>{
+l.innerHTML+=`
+<div class="item">
+<input placeholder="نام زبان" value="${esc(x.name)}"
+oninput="data.languages[${i}].name=this.value;updateCV()">
+<input placeholder="سطح زبان؛ مثلاً متوسط" value="${esc(x.level)}"
+oninput="data.languages[${i}].level=this.value;updateCV()">
+<button class="red" onclick="removeLanguage(${i})">حذف</button>
+</div>`;
+});
+}
+
+function updateCV(){
+
+document.getElementById("cvName").textContent=
+document.getElementById("name").value||"نام شما";
+
+document.getElementById("cvJob").textContent=
+document.getElementById("job").value||"عنوان شغلی";
+
+document.getElementById("cvEmail").textContent=
+"📧 "+(document.getElementById("email").value||"ایمیل");
+
+document.getElementById("cvPhone").textContent=
+"📱 "+(document.getElementById("phone").value||"شماره تلفن");
+
+document.getElementById("cvAddress").textContent=
+"📍 "+(document.getElementById("address").value||"آدرس");
+
+document.getElementById("cvAbout").textContent=
+document.getElementById("about").value||"توضیحات درباره شما";
+
+let edu=document.getElementById("cvEducation");
+
+edu.innerHTML=data.education.length
+?data.education.map(x=>`
+<div class="cv-entry">
+<div class="cv-entry-title">${esc(x.school)}</div>
+<div class="cv-muted">${esc(x.field)}${x.year?" | "+esc(x.year):""}</div>
+<div>${esc(x.description)}</div>
+</div>`).join("")
+:'<div class="empty">هنوز تحصیلات اضافه نشده است.</div>';
+
+let ex=document.getElementById("cvExperience");
+
+ex.innerHTML=data.experience.length
+?data.experience.map(x=>`
+<div class="cv-entry">
+<div class="cv-entry-title">${esc(x.position)}</div>
+<div class="cv-muted">${esc(x.company)}${x.duration?" | "+esc(x.duration):""}</div>
+<div>${esc(x.description)}</div>
+</div>`).join("")
+:'<div class="empty">هنوز تجربه کاری اضافه نشده است.</div>';
+
+let valid=data.skills.filter(x=>x.trim());
+
+document.getElementById("cvSkills").innerHTML=
+valid.length
+?valid.map(x=>`<span class="skill">${esc(x)}</span>`).join("")
+:'<div class="empty">هنوز مهارتی اضافه نشده است.</div>';
+
+document.getElementById("cvLanguages").innerHTML=
+data.languages.length
+?data.languages.map(x=>`
+<div class="lang"><span>${esc(x.name)}</span><strong>${esc(x.level)}</strong></div>
+`).join("")
+:'<div class="empty">هنوز زبانی اضافه نشده است.</div>';
+
+let photo=document.getElementById("cvPhoto");
+
+if(data.photo){
+photo.src=data.photo;
+photo.style.display="block";
+}else{
+photo.style.display="none";
+}
+
+updateTheme();
+updateTemplate();
+}
+
+function updateTheme(){
+
+let theme=document.getElementById("theme").value;
+let head=document.getElementById("cvHead");
+
+if(theme==="blue")
+head.style.background="linear-gradient(135deg,#172554,#2563eb)";
+
+if(theme==="dark")
+head.style.background="linear-gradient(135deg,#020617,#334155)";
+
+if(theme==="green")
+head.style.background="linear-gradient(135deg,#064e3b,#16a34a)";
+}
+
+function updateTemplate(){
+document.getElementById("cv").className=
+"cv "+document.getElementById("template").value;
+updateTheme();
+}
+
+function clearCV(){
+
+if(!confirm("همه اطلاعات این CV پاک شود؟"))return;
+
+data={title:"",education:[],experience:[],skills:[],languages:[],photo:""};
+
+fields.forEach(id=>document.getElementById(id).value="");
+
+document.getElementById("cvTitle").value="";
+document.getElementById("photo").value="";
+
+renderEditor();
+updateCV();
+}
+
+function printCV(){
+updateCV();
+window.print();
+}
+
+function downloadPDF(){
+updateCV();
+alert("در صفحه چاپ، گزینه «Save as PDF» را انتخاب کن.");
+window.print();
+}
+
+async function shareCV(){
+
+updateCV();
+
+let name=document.getElementById("name").value||"CV من";
+let job=document.getElementById("job").value||"";
+let email=document.getElementById("email").value||"";
+let phone=document.getElementById("phone").value||"";
+
+let text=`📄 CV - ${name}
+
+👤 نام: ${name}
+💼 عنوان شغلی: ${job}
+📧 ایمیل: ${email}
+📱 تلفن: ${phone}
+
+ساخته‌شده با CV Builder Pro`;
+
+if(navigator.share){
+
+try{
+await navigator.share({
+title:"CV - "+name,
+text:text
+});
+}catch(e){}
+
+}else{
+alert("اشتراک‌گذاری در این مرورگر پشتیبانی نمی‌شود.");
+}
+}
+
+function esc(value){
+
+if(value===undefined||value===null)return "";
+
+return String(value)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+}
+
+let selected=localStorage.getItem("selected_template");
+
+if(selected)
+document.getElementById("template").value=selected;
+
+renderEditor();
+updateCV();
+updateSavedStatus();
+
+</script>
+
+</body>
+</html>
