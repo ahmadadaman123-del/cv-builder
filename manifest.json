@@ -1,0 +1,20 @@
+{
+  "name": "CV Builder Pro",
+  "short_name": "CV Builder",
+  "description": "ساخت رزومه حرفه‌ای",
+  "start_url": "./Index.html",
+  "display": "standalone",
+  "background_color": "#eef2ff",
+  "theme_color": "#2563eb",
+  "orientation": "portrait",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
